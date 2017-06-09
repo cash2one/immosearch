@@ -1,0 +1,4 @@
+FROM binux/pyspider
+ADD wait-for-it.sh /usr/bin/wait-for-it.sh
+RUN apt-get update && apt-get install -y netcat
+RUN chmod +x /usr/bin/wait-for-it.sh

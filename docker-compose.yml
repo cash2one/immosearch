@@ -1,0 +1,84 @@
+version: '2'
+networks:
+  net:
+    driver: bridge
+
+services:
+  kibana:
+    image: docker.elastic.co/kibana/kibana:5.4.1
+    container_name: kibana
+    build:
+      context: .
+      dockerfile: kibana-Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    environment:
+      - "ELASTICSEARCH_URL=http://elasticsearch:9200"
+    networks:
+      - net
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
+    container_name: elasticsearch
+    build:
+      context: .
+      dockerfile: elasticsearch-Dockerfile
+    restart: unless-stopped
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "xpack.security.enabled=false"
+      - "xpack.monitoring.enabled=false"
+      - "xpack.graph.enabled=false"
+      - "xpack.watcher.enabled=false"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 2g
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - net
+
+  pyspider:
+    image: my/pyspider
+    container_name: pyspider
+    build:
+      context: .
+      dockerfile: pyspider-Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+    entrypoint:
+      - "wait-for-it.sh"
+      - "elasticsearch:9200"
+      - "--"
+      - "pyspider"
+      - "--resultdb"
+      - "elasticsearch+resultdb://elasticsearch:9200/?index=pyspider_willhaben_resultdb"
+#      - "--projectdb"
+#      - "local+projectdb:///opt/pyspider_scripts/*"
+    ports:
+      - 5000:5000
+    volumes:
+      - pyspider_data:/opt/pyspider
+#      - ./pyspider_scripts:/opt/pyspider_scripts
+    networks:
+      - net
+
+
+volumes:
+  es_data: {}
+  pyspider_data: {}

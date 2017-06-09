@@ -1,0 +1,4 @@
+FROM docker.elastic.co/kibana/kibana:5.3.0
+ADD kibana-config/ /usr/share/kibana/config/
+ADD wait-for-it.sh .
+RUN chmod -x wait-for-it.sh

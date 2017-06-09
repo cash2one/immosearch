@@ -1,0 +1,57 @@
+[
+  {
+    "_id": "69363980-4bb3-11e7-9f50-0d22dfcec803",
+    "_type": "search",
+    "_source": {
+      "title": "interesting_houses",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "price_per_sm",
+        "result.price",
+        "result.sm",
+        "result.plz",
+        "result.city",
+        "result.title",
+        "result.img",
+        "result.url"
+      ],
+      "sort": [
+        "price_per_sm",
+        "asc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pyspider_willhaben*\",\"highlightAll\":true,\"filter\":[],\"query\":{\"query_string\":{\"query\":\"result.city : (\\\"Ottensheim\\\",\\\"Walding\\\",\\\"Puchenau\\\",\\\"Feldkirchen\\\")\",\"analyze_wildcard\":true}}}"
+      }
+    }
+  },
+  {
+    "_id": "5e6a94e0-4bb0-11e7-8449-3bf197db9f60",
+    "_type": "visualization",
+    "_source": {
+      "title": "price_per_sm_per_city_linechar",
+      "visState": "{\"title\":\"price_per_sm_per_city_linechar\",\"type\":\"line\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"top\",\"showCircles\":true,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":false,\"radiusRatio\":\"17\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":true,\"setYExtents\":false,\"orderBucketsBySum\":false},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"result.city.keyword\",\"size\":100,\"order\":\"asc\",\"orderBy\":\"3\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"price_per_sm\",\"customLabel\":\"ø €/m²\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"radius\",\"params\":{\"field\":\"result.price\",\"customLabel\":\"ø €\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pyspider_willhaben*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "82c70310-4baf-11e7-8449-3bf197db9f60",
+    "_type": "visualization",
+    "_source": {
+      "title": "price_histogram_per_plz2",
+      "visState": "{\"title\":\"price_histogram_per_plz2\",\"type\":\"heatmap\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"enableHover\":true,\"legendPosition\":\"right\",\"times\":[],\"colorsNumber\":10,\"colorSchema\":\"Blues\",\"setColorRange\":false,\"colorsRange\":[],\"invertColors\":false,\"percentageMode\":false,\"valueAxes\":[{\"show\":false,\"id\":\"ValueAxis-1\",\"type\":\"value\",\"scale\":{\"type\":\"square root\",\"defaultYExtents\":true},\"labels\":{\"show\":true,\"rotate\":0,\"color\":\"#555\"}}]},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"result.price\",\"customLabel\":\"ø €\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"range\",\"schema\":\"segment\",\"params\":{\"field\":\"result.price\",\"ranges\":[{\"from\":0,\"to\":250000},{\"from\":250001,\"to\":350000},{\"from\":350001,\"to\":400000},{\"from\":400001,\"to\":500000},{\"from\":500001,\"to\":900000}],\"customLabel\":\"€\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"result.city.keyword\",\"size\":10,\"order\":\"asc\",\"orderBy\":\"_term\",\"customLabel\":\"city\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 79434\":\"rgb(247,251,255)\",\"79434 - 158867\":\"rgb(227,238,249)\",\"158867 - 238300\":\"rgb(208,225,242)\",\"238300 - 317734\":\"rgb(182,212,233)\",\"317734 - 397167\":\"rgb(148,196,223)\",\"397167 - 476600\":\"rgb(107,174,214)\",\"476600 - 556034\":\"rgb(74,152,201)\",\"556034 - 635467\":\"rgb(46,126,188)\",\"635467 - 714900\":\"rgb(23,100,171)\",\"714900 - 794334\":\"rgb(8,74,145)\"}}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"pyspider_willhaben*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
+      }
+    }
+  }
+]
